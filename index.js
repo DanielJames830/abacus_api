@@ -1,14 +1,18 @@
 const express = require('express');
+const http = require('http');
+const dotenv = require('dotenv');
 const app = express();
 app.use(express.json());
 
-app.use('/encounter', require('./routers/encounterRouter'));
+app.use('/encounter', require('./src/routers/encounterRouter'));
 
-
+const hostname = process.env.LOCAL_IP
 const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}!`));
+const server = http.createServer(app);
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}!`));

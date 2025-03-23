@@ -1,4 +1,3 @@
-// controllers/encounterController.js
 const encounterService = require('../services/encounterService');
 
 async function createEncounter(req, res) {
