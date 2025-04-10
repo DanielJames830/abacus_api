@@ -1,10 +1,16 @@
 const express = require('express');
 const http = require('http');
 const app = express();
+const cors = require('cors');
+const authenticateToken = require('./src/middleware/authMiddleware');
+
 app.use(express.json());
+app.use(cors());
 
 app.use('/encounter', require('./src/routers/encounterRouter'));
 app.use('/map', require('./src/routers/mapRouter'));
+app.use('/entity', require('./src/routers/entityRouter'));
+app.use('/user', require('./src/routers/userRouter'));
 
 const hostname = process.env.LOCAL_IP
 const PORT = process.env.PORT || 3000;

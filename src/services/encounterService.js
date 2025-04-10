@@ -28,9 +28,28 @@ async function updateEncounter(id, updateData) {
     const encounterRef = db.collection('encounters').doc(id);
     const docSnapshot = await encounterRef.get();
     if (!docSnapshot.exists) {
-       throw new Error('Encounter not found');
+        throw new Error('Encounter not found');
     }
     await encounterRef.update(updateData);
 }
 
-module.exports = { createEncounter, getEncounterById, updateEncounter };
+async function getEntitiesByEncounterId(encounterId) {
+    try {
+        const entitiesRef = await db.collection('encounters').doc(encounterId).collection('entities').get();
+        if (entitiesRef.empty) {
+            return [];
+        }
+
+        const entities = [];
+        entitiesRef.forEach(doc => {
+            entities.push({ id: doc.id, ...doc.data() });
+        });
+
+        return entities;
+    } catch (error) {
+        console.error('Error getting entities:', error);
+        throw error;
+    }
+}
+
+module.exports = { createEncounter, getEncounterById, updateEncounter, getEntitiesByEncounterId };

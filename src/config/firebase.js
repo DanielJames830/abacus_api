@@ -1,5 +1,5 @@
 const admin = require('firebase-admin');
-require("dotenv").config({ path: '.env'});
+require("dotenv").config({ path: '.env' });
 
 const serviceAccount = JSON.parse(process.env.SERVICE_ACCOUNT);
 
@@ -9,4 +9,6 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-module.exports = { db };
+
+
+module.exports = { db, admin };

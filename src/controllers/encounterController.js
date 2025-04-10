@@ -22,7 +22,10 @@ async function getEncounterById(req, res) {
             return res.status(404).send('Encounter not found');
         }
 
+        const entities = await encounterService.getEntitiesByEncounterId(id);
+        encounter.entities = entities;
         res.status(200).json(encounter);
+
     } catch (error) {
         console.error('Error retrieving encounter:', error);
         res.status(500).send('Error retrieving encounter');
